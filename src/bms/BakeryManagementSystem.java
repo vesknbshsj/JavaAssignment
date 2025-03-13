@@ -5,6 +5,11 @@ import java.util.*;
 public class BakeryManagementSystem {
 	private ArrayList<BakeryItem> inventory = new ArrayList<>(); //List of the items
 	private Scanner sc = new Scanner(System.in);
+	public BakeryManagementSystem()
+	{
+		initializeItem();
+	}
+	
 	public void initializeItem()
 	{	inventory.add(new BakeryItem("White Bread",1.55 , 50));
 		inventory.add(new BakeryItem("Baguette",5.00 , 30));
@@ -12,7 +17,7 @@ public class BakeryManagementSystem {
 	}
 	public void startSystem() {
 		int choice;
-		initializeItem();
+		
 		do {
 			System.out.println("\n-----Bakery Management System-----");
 			System.out.println("1. Add Item");
@@ -44,6 +49,7 @@ public class BakeryManagementSystem {
 	String name;
 	double p;
 	int qty;
+	
 	
 	private void addItem() {
 		System.out.print("Enter item name: ");

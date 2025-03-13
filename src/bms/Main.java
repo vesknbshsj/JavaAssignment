@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class Main {
 	public static void main(String[] args) {
 		Scanner sc=new Scanner(System.in);
-        BakeryManagementSystem system = new BakeryManagementSystem();
+		BakeryManagementSystem system = new BakeryManagementSystem();
         ArrayList<Order> orderList = new ArrayList<>();
         int chc;
         
@@ -21,7 +21,8 @@ public class Main {
 			sc.nextLine(); //Use to clear the newline character after the input
 			
 			switch(chc) {
-				case 1 :system.startSystem();
+				case 1 :
+						system.startSystem();
 						break;// Start running the menu ;
 				case 2 : Order order=new Order(system);
 						order.PlaceOrder();
