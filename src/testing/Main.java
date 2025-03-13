@@ -6,5 +6,9 @@ public class Main {
 	
 		t.displayTesting();
 		Testing t1 = new Testing();
-		t1.displayTesting();	}
+		t1.displayTesting();
+		
+		Testing t2 = new Testing();
+		t2.displayTesting();
+		}
 }
