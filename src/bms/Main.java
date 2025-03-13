@@ -24,7 +24,7 @@ public class Main {
 				case 1 :
 						system.startSystem();
 						break;// Start running the menu ;
-				case 2 : Order order=new Order(system);
+				case 2 : Order order=new Order(system);//the data inside system(instance) is passing to order
 						order.PlaceOrder();
 						break;
 				case 3:System.out.println("Haven't implement") ;

@@ -1,12 +1,14 @@
 package bms;
-
+import java.text.DecimalFormat;
 public class BakeryItem {
     private String itemName;
     private double price;
     private int quantity;
-    
+	DecimalFormat df=new DecimalFormat("##0.00");
     public BakeryItem()
-    {}
+    {  
+    	
+    }
     public BakeryItem(String itemName, double price, int quantity) {
         this.itemName = itemName;
     	this.price = price;
@@ -39,7 +41,7 @@ public class BakeryItem {
     
     public void displayItem() {
         System.out.println("Item Name: " + itemName);
-        System.out.println("Price: RM" + price);
+        System.out.println("Price: RM" + df.format(price));
         System.out.println("Quantity: " + quantity);
     }
 }

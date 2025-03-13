@@ -1,10 +1,13 @@
 package bms;
-
+import java.text.DecimalFormat;
 import java.util.*;
 
-public class BakeryManagementSystem {
+
+	public class BakeryManagementSystem {
+
 	private ArrayList<BakeryItem> inventory = new ArrayList<>(); //List of the items
 	private Scanner sc = new Scanner(System.in);
+	DecimalFormat df=new DecimalFormat("##0.00");
 	public BakeryManagementSystem()
 	{
 		initializeItem();
@@ -62,7 +65,7 @@ public class BakeryManagementSystem {
 		inventory.add(new BakeryItem(name, p, qty));//Add the item into the array item list
 		System.out.println("Item added.");
 	}
-	
+	// 'item' is a temporary variable representing a BakeryItem in the inventory list.
 	private void updateItem() {
         System.out.print("Enter item name to update: ");
         name = sc.nextLine();
@@ -88,26 +91,36 @@ public class BakeryManagementSystem {
     }
 
     //display the array list of all the items
-    private void displayInventory() {
+    public void displayInventory() {
         System.out.println("\nCurrent Inventory:");
+
         if (inventory.isEmpty()) {
             System.out.println("No items available.");
         } else {
-        	int index = 1; //setting the value start from Item 1 then increase every time
-        	for (BakeryItem item : inventory) {
-        		System.out.println("Item " +index + ":");
-                item.displayItem();
-                System.out.println();//spacing 1 line to make it tidy
-                index++;//index increase 1 
-        	}
+            int index = 1; 
+        
+            System.out.printf("%-10s %-20s %-10s %-10s%n", "Item No.", "Item Name", "Price(RM)", "Quantity");//adjust the align
+            System.out.println("-------------------------------------------------------------");
+            for (BakeryItem item : inventory)
+            {
+                System.out.printf("%-10d %-20s %-10s %-10d%n", 
+                                  index++, 
+                                  item.getItemName(),
+                                  df.format(item.getPrice()),
+                                  item.getQuantity());
+            }
+            System.out.println("-------------------------------------------------------------"); 
         }
     }
-    public BakeryItem getItemFromInventory(String itemName) // to let other classes to access the Item Details
-    {
-        for (BakeryItem item : inventory) {
+    
+    public BakeryItem getInventory(String itemName) {
+        for (BakeryItem item : inventory)
+        {
             if (item.getItemName().equalsIgnoreCase(itemName)) {
-                return item; // return item
+                return item; 
             }
-        }return null;
-}
+        }
+        return null;
+    }
+
 }
