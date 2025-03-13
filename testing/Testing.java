@@ -12,4 +12,17 @@ public class Testing
 		price = p;
 		number = n;
 	}
+	
+	public String getTesting() {
+		return testing;
+	}
+	public int getPrice() {
+		return price;
+	}
+	public double getNumber() {
+		return number;
+	}
+	public void displayTesting() {
+		System.out.println("Testing is " +testing +" " +price +" " +number);
+	}
 }
