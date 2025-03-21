@@ -14,9 +14,15 @@ import java.util.*;
 	}
 	
 	public void initializeItem()
-	{	inventory.add(new BakeryItem("White Bread",1.55 , 50));
-		inventory.add(new BakeryItem("Baguette",5.00 , 30));
-		inventory.add(new BakeryItem("Cake",7.50 , 20));
+	{	
+		inventory.add(new BakeryItem("White Bread", 1.55, 50));
+		inventory.add(new BakeryItem("Baguette", 5.00, 30));
+		inventory.add(new BakeryItem("Chocolate Cake", 7.50, 20));
+		inventory.add(new BakeryItem("Vanilla Cake", 7.50, 20));
+		inventory.add(new BakeryItem("Cookies", 3.00, 100));
+		inventory.add(new BakeryItem("Croissant", 2.50, 40));
+		inventory.add(new BakeryItem("Danish Pastry", 4.00, 25));
+		inventory.add(new BakeryItem("Muffin", 2.00, 45));
 	}
 	public void startSystem() {
 		int choice;
@@ -69,7 +75,7 @@ import java.util.*;
 	private void updateItem() {
         System.out.print("Enter item name to update: ");
         name = sc.nextLine();
-        for (BakeryItem item : inventory) {//Search from the array list to find the entered item
+        for (BakeryItem item : inventory)//Search from the array list to find the entered item
             if (item.getItemName().equalsIgnoreCase(name)) {
                 System.out.print("Enter new price: ");
                 item.setPrice(sc.nextDouble());//change the price
@@ -78,7 +84,6 @@ import java.util.*;
                 System.out.println("Item updated.");
                 return; //stop after update done
             }
-        }
         System.out.println("Item not found. Please try again");
     }
 

@@ -2,7 +2,11 @@ package bms;
 import java.util.*;
 
 public class Order {	
-    public static String Status;
+    public static final String STATUS_PENDING = "📌 Pending";
+    public static final String STATUS_IN_PROGRESS = "In Progress";
+    public static final String STATUS_COMPLETED = "✅ Completed";
+    
+    private String status;
     private static int orderIdCounter = 0;
     private int orderId;
     private ArrayList<BakeryItem> orderlists;
@@ -13,16 +17,20 @@ public class Order {
         this.bms = bms; 
         this.orderlists = new ArrayList<>(); // Initialize an empty array list of items
         this.orderId = ++orderIdCounter; // Let the orderId become incremental
+        this.status = STATUS_PENDING;
     }
 
     public void displayStatus() {
-        System.out.println("Order Status: " + Status);
+        System.out.println("Order Status: " + status);
+    }
+
+    public int getOrderId() {
+        return orderId;
     }
 
     public void PlaceOrder() {	
         int continueOrder;
         bms.displayInventory();
-        Status = "📌 Pending...";
         displayStatus();
 
         do {
@@ -52,12 +60,13 @@ public class Order {
                 System.out.println("Item not found.");  // Display an error if item does not exist
             }
 
-            Status = "In progress...";  // Update order status
+            status = STATUS_IN_PROGRESS;
             displayStatus();      		 // Display current order status
 
      
             System.out.println("Enter 0 to finish order, any other number to continue.");
             continueOrder = sc.nextInt();  
+            sc.nextLine();
 
         } while (continueOrder != 0);  
         displayReceipt();
@@ -74,10 +83,14 @@ public class Order {
             total += item.getPrice() * item.getQuantity();
         }
 
-        System.out.println("Total: RM" + total);
+        System.out.println("Total: RM" + String.format("%.2f", total));
         System.out.println("----------------------------");
-        Status = "✅ Completed!";
+        status = STATUS_COMPLETED;
         displayStatus();
+    }
+
+    public ArrayList<BakeryItem> getOrderlists() {
+        return orderlists;
     }
 }
 /*need to create another array list to store each order* (Part4)*/
