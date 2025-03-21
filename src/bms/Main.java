@@ -11,7 +11,7 @@ public class Main {
         
         do {
 			System.out.println("\n-----Bakery Management System-----");
-			System.out.println("1. Menu");
+			System.out.println("1. Edit Item");
 			System.out.println("2. Place Order");
 			System.out.println("3. View Order History");
 			System.out.println("4. View Total Sales");
@@ -19,7 +19,7 @@ public class Main {
 			System.out.println("0. Exit");
 			System.out.print("Enter choice: ");
 			chc = sc.nextInt();
-			sc.nextLine(); //Use to clear the newline character after the input
+			sc.nextLine();
 			
 			switch(chc) {
 				case 1:

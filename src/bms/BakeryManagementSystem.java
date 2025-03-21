@@ -5,7 +5,7 @@ import java.util.*;
 
 	public class BakeryManagementSystem {
 
-	private ArrayList<BakeryItem> inventory = new ArrayList<>(); //List of the items
+	private ArrayList<BakeryItem> inventory = new ArrayList<>();
 	private Scanner sc = new Scanner(System.in);
 	DecimalFormat df=new DecimalFormat("##0.00");
 	public BakeryManagementSystem()
@@ -33,11 +33,11 @@ import java.util.*;
 			System.out.println("2. Update Item");
 			System.out.println("3. Remove Item");
 			System.out.println("4. Display Inventory");
-			System.out.println("0. Exit");
+			System.out.println("0. Back to Main Menu");
 			System.out.print("Enter choice: ");
 			choice = sc.nextInt();
 			
-			sc.nextLine(); //Use to clear the newline character after the input
+			sc.nextLine();
 			
 			switch(choice) {
 				case 1 :addItem();
@@ -52,7 +52,7 @@ import java.util.*;
 						break;
 				default: System.out.println("Invalid choice.");
 			}
-		}while(choice != 0); //Keep looping until the user choose 0
+		}while(choice != 0);
 	}	
 	
 	String name;
@@ -65,24 +65,24 @@ import java.util.*;
 		name = sc.nextLine();
 		System.out.print("Enter price: ");
 		p = sc.nextDouble();
-		System.out.println("Enter quantity: ");
+		System.out.print("Enter quantity: ");
 		qty = sc.nextInt();
 			
-		inventory.add(new BakeryItem(name, p, qty));//Add the item into the array item list
+		inventory.add(new BakeryItem(name, p, qty));
 		System.out.println("Item added.");
 	}
-	// 'item' is a temporary variable representing a BakeryItem in the inventory list.
+	
 	private void updateItem() {
         System.out.print("Enter item name to update: ");
         name = sc.nextLine();
-        for (BakeryItem item : inventory)//Search from the array list to find the entered item
+        for (BakeryItem item : inventory)
             if (item.getItemName().equalsIgnoreCase(name)) {
                 System.out.print("Enter new price: ");
-                item.setPrice(sc.nextDouble());//change the price
+                item.setPrice(sc.nextDouble());
                 System.out.print("Enter new quantity: ");
-                item.setQuantity(sc.nextInt());//change the quantity
+                item.setQuantity(sc.nextInt());
                 System.out.println("Item updated.");
-                return; //stop after update done
+                return;
             }
         System.out.println("Item not found. Please try again");
     }
@@ -91,11 +91,10 @@ import java.util.*;
         System.out.print("Enter item name to remove: ");
         name = sc.nextLine();
         inventory.removeIf(item -> item.getItemName().equalsIgnoreCase(name));
-        //remove the item entered if existed in the array list
+        
         System.out.println("Item removed. ");
     }
 
-    //display the array list of all the items
     public void displayInventory() {
         System.out.println("\nCurrent Inventory:");
 
@@ -104,8 +103,8 @@ import java.util.*;
         } else {
             int index = 1; 
         
-            System.out.printf("%-10s %-20s %-10s %-10s%n", "Item No.", "Item Name", "Price(RM)", "Quantity");//adjust the align
-            System.out.println("-------------------------------------------------------------");
+            System.out.printf("%-10s %-20s %-10s %-10s%n", "Item No.", "Item Name", "Price(RM)", "Quantity");
+            System.out.println("--------------------------------------------------------");
             for (BakeryItem item : inventory)
             {
                 System.out.printf("%-10d %-20s %-10s %-10d%n", 
@@ -114,7 +113,7 @@ import java.util.*;
                                   df.format(item.getPrice()),
                                   item.getQuantity());
             }
-            System.out.println("-------------------------------------------------------------"); 
+            System.out.println("--------------------------------------------------------"); 
         }
     }
     

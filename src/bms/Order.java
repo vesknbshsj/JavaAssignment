@@ -10,13 +10,13 @@ public class Order {
     private static int orderIdCounter = 0;
     private int orderId;
     private ArrayList<BakeryItem> orderlists;
-    private BakeryManagementSystem bms; // Refer to BMS
+    private BakeryManagementSystem bms;
     Scanner sc = new Scanner(System.in);
 
     public Order(BakeryManagementSystem bms) {	
         this.bms = bms; 
-        this.orderlists = new ArrayList<>(); // Initialize an empty array list of items
-        this.orderId = ++orderIdCounter; // Let the orderId become incremental
+        this.orderlists = new ArrayList<>();
+        this.orderId = ++orderIdCounter;
         this.status = STATUS_PENDING;
     }
 
@@ -35,35 +35,32 @@ public class Order {
 
         do {
             System.out.println("Enter Item Name: ");
-            String iName = sc.nextLine();  // Get the item name from user input
+            String iName = sc.nextLine();
 
             System.out.print("Enter quantity: ");
-            int qty = sc.nextInt();  // Get the quantity from user input
-            sc.nextLine();           // Consume the newline character left by nextInt()
+            int qty = sc.nextInt();  
+            sc.nextLine();
 
-            // Retrieve the BakeryItem object from inventory using the item name
             BakeryItem item = bms.getInventory(iName); 
 
-            if (item != null) {  // Check if the item exists in inventory
+            if (item != null) { 
                 if (item.getQuantity() >= qty) 
-                {  // Check if enough stock is available
-                    item.setQuantity(item.getQuantity() - qty);  // Deduct ordered quantity from inventory
-                    // Add the selected item to the order list
+                {  
+                    item.setQuantity(item.getQuantity() - qty);
                     orderlists.add(new BakeryItem(item.getItemName(), item.getPrice(), qty)); 
                     System.out.println("Added: " + qty + " x " + item.getItemName());
                 } else 
                 {
-                    System.out.println("Not enough stock available.");  // Display an error if stock is insufficient
+                    System.out.println("Not enough stock available.");
                 }
             } else
             {
-                System.out.println("Item not found.");  // Display an error if item does not exist
+                System.out.println("Item not found.");
             }
 
             status = STATUS_IN_PROGRESS;
-            displayStatus();      		 // Display current order status
+            displayStatus();
 
-     
             System.out.println("Enter 0 to finish order, any other number to continue.");
             continueOrder = sc.nextInt();  
             sc.nextLine();
@@ -93,7 +90,7 @@ public class Order {
         return orderlists;
     }
 }
-/*need to create another array list to store each order* (Part4)*/
+
 
 	
 	
