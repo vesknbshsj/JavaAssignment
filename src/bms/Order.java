@@ -50,7 +50,7 @@ public class Order {
                     item.setQuantity(item.getQuantity() - qty);  // Deduct ordered quantity from inventory
                     // Add the selected item to the order list
                     orderlists.add(new BakeryItem(item.getItemName(), item.getPrice(), qty)); 
-                    System.out.println("✔️ Added: " + qty + " x " + item.getItemName());
+                    System.out.println("Added: " + qty + " x " + item.getItemName());
                 } else 
                 {
                     System.out.println("Not enough stock available.");  // Display an error if stock is insufficient
@@ -74,7 +74,7 @@ public class Order {
     
     
     public void displayReceipt() {
-        System.out.println("\n🧾 Order Receipt:");
+        System.out.println("\nOrder Receipt:");
         System.out.println("Order ID: " + orderId);
         double total = 0;
 
