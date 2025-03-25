@@ -15,9 +15,9 @@ public class Order {
 
     public Order(BakeryManagementSystem bms) {	
         this.bms = bms; 
-        this.orderlists = new ArrayList<>();
-        this.orderId = ++orderIdCounter;
-        this.status = STATUS_PENDING;
+        orderlists = new ArrayList<>();
+        orderId = ++orderIdCounter;
+        status = STATUS_PENDING;
     }
 
     public void displayStatus() {

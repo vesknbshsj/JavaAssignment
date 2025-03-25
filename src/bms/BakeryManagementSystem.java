@@ -2,9 +2,15 @@ package bms;
 import java.text.DecimalFormat;
 import java.util.*;
 
-
+	
 	public class BakeryManagementSystem {
 
+		
+	public String name;
+	public double p;
+	public int qty;
+		
+		
 	private ArrayList<BakeryItem> inventory = new ArrayList<>();
 	private Scanner sc = new Scanner(System.in);
 	DecimalFormat df=new DecimalFormat("##0.00");
@@ -12,6 +18,7 @@ import java.util.*;
 	{
 		initializeItem();
 	}
+
 	
 	public void initializeItem()
 	{	
@@ -31,7 +38,7 @@ import java.util.*;
 			System.out.println("\n-----Bakery Management System-----");
 			System.out.println("1. Add Item");
 			System.out.println("2. Update Item");
-			System.out.println("3. Remove Item");
+			System.out.println("3. Remove Item"); 
 			System.out.println("4. Display Inventory");
 			System.out.println("0. Back to Main Menu");
 			System.out.print("Enter choice: ");
@@ -55,10 +62,7 @@ import java.util.*;
 		}while(choice != 0);
 	}	
 	
-	String name;
-	double p;
-	int qty;
-	
+
 	
 	private void addItem() {
 		System.out.print("Enter item name: ");
