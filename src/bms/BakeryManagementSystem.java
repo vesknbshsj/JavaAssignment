@@ -6,7 +6,7 @@ public class BakeryManagementSystem {
 
 	private ArrayList<BakeryItem> inventory = new ArrayList<>();
 	private Scanner sc = new Scanner(System.in);
-	DecimalFormat df=new DecimalFormat("##0.00");
+	private DecimalFormat df=new DecimalFormat("##0.00");
 	public BakeryManagementSystem()
 	{
 		initializeItem();

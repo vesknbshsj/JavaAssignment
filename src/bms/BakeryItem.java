@@ -5,15 +5,18 @@ public class BakeryItem {
     private String itemName;
     private double price;
     private int quantity;
-	DecimalFormat df=new DecimalFormat("##0.00");
-    public BakeryItem()
-    {  
-    	
-    }		
+    private static final DecimalFormat df = new DecimalFormat("##0.00");
+
+    public BakeryItem() {
+        this.itemName = "";
+        this.price = 0.0;
+        this.quantity = 0;
+    }
+
     public BakeryItem(String itemName, double price, int quantity) {
-        this.itemName = itemName;
-    	this.price = price;
-    	this.quantity = quantity;
+        setItemName(itemName);
+        setPrice(price);
+        setQuantity(quantity);
     }
     
     public void setItemName(String itemName) {
@@ -29,15 +32,15 @@ public class BakeryItem {
     }
     
     public String getItemName() {
-    	return itemName;
+        return itemName;
     }
     
     public double getPrice() {
-    	return price;
+        return price;
     }
     
     public int getQuantity() {
-    	return quantity;
+        return quantity;
     }
     
     public void displayItem() {
@@ -46,4 +49,3 @@ public class BakeryItem {
         System.out.println("Quantity: " + quantity);
     }
 }
-

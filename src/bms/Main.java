@@ -43,7 +43,7 @@ public class Main {
 	}
 
 	private static void staffMenu(BakeryManagementSystem bakery, StaffManagement staffManager, ArrayList<Order> orderList) {
-		Scanner sc = new Scanner(System.in);
+		Scanner scanner = new Scanner(System.in);
 		int choice;
 		
 		do {
@@ -57,7 +57,7 @@ public class Main {
 			System.out.println("0. Back to Main Menu");
 			
 			System.out.print("\nEnter your choice: ");
-			choice = sc.nextInt();
+			choice = scanner.nextInt();
 			
 			switch (choice) {
 				case 1:
@@ -71,7 +71,7 @@ public class Main {
 				case 3:
 					System.out.println("\n=== Place Order ===");
 					System.out.print("Enter Customer ID: ");
-					int customerId = sc.nextInt();
+					int customerId = scanner.nextInt();
 					Customer customer = staffManager.findCustomer(customerId);
 					if (customer == null) {
 						System.out.println("Customer not found! Please register the customer first.");
@@ -105,7 +105,7 @@ public class Main {
 				case 6:
 					System.out.println("\n=== Search Order ===");
 					System.out.print("Enter Order ID to search: ");
-					int searchId = sc.nextInt();
+					int searchId = scanner.nextInt();
 					boolean found = false;
 					for (Order o : orderList) {
 						if (o.getOrderId() == searchId) {
