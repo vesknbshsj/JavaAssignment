@@ -53,4 +53,4 @@ public class Report {
         }
         return total;
     }
-}	
+}
