@@ -1,48 +1,66 @@
 package bms;
-import java.text.DecimalFormat;
+
+/**
+ * Represents a single bakery product/item
+ */
 public class BakeryItem {
     private String itemName;
     private double price;
     private int quantity;
-	DecimalFormat df=new DecimalFormat("##0.00");
-    public BakeryItem()
-    {  
-    	
-    }		
+
+    
+    //Default constructor
+     
+    public BakeryItem() {}
+
+    /**
+     * Creates new bakery item
+     */
     public BakeryItem(String itemName, double price, int quantity) {
         this.itemName = itemName;
-    	this.price = price;
-    	this.quantity = quantity;
+        this.price = price;
+        this.quantity = quantity;
     }
-    
+
+    /**
+     * Sets item name
+     */
     public void setItemName(String itemName) {
-    	this.itemName = itemName;
+        this.itemName = itemName;
     }
-    
+
+    /**
+     * Sets item price
+     */
     public void setPrice(double price) {
-    	this.price = price;
+        this.price = price;
     }
-    
+
+    /**
+     * Sets item quantity
+     */
     public void setQuantity(int quantity) {
-    	this.quantity = quantity;
+        this.quantity = quantity;
     }
-    
+
+    /**
+     * Gets item name
+     */
     public String getItemName() {
-    	return itemName;
+        return itemName;
     }
-    
+
+    /**
+     * Gets item price
+     */
     public double getPrice() {
-    	return price;
+        return price;
     }
-    
+
+    /**
+     * Gets item quantity
+     */
     public int getQuantity() {
-    	return quantity;
-    }
-    
-    public void displayItem() {
-        System.out.println("Item Name: " + itemName);
-        System.out.println("Price: RM" + df.format(price));
-        System.out.println("Quantity: " + quantity);
+        return quantity;
     }
 }
-

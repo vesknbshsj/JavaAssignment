@@ -1,26 +1,26 @@
 package bms;
-import java.util.ArrayList;
-import java.text.DecimalFormat;
 import java.util.*;
 
+/**
+ * Core system class that manages all bakery operations
+ */
 public class BakeryManagementSystem {
-
-    public String name;
-    public double p;
-    public int qty;
     private ArrayList<BakeryItem> inventory = new ArrayList<>();
+    private ArrayList<Order> orderList = new ArrayList<>();
+    private ArrayList<Customer> customers = new ArrayList<>();
     private Scanner sc = new Scanner(System.in);
-    DecimalFormat df = new DecimalFormat("##0.00");
 
-
-    private ArrayList<Order> orderList = new ArrayList<>();  
-
+    /**
+     * Constructor - initializes with default bakery items
+     */
     public BakeryManagementSystem() {
         initializeItem();
     }
 
-
-    public void initializeItem() {    
+    /**
+     * Populates initial inventory items
+     */
+    private void initializeItem() {
         inventory.add(new BakeryItem("White Bread", 1.55, 50));
         inventory.add(new BakeryItem("Baguette", 5.00, 30));
         inventory.add(new BakeryItem("Chocolate Cake", 7.50, 20));
@@ -31,14 +31,17 @@ public class BakeryManagementSystem {
         inventory.add(new BakeryItem("Muffin", 2.00, 45));
     }
 
+    /**
+     * Displays and manages inventory sub-menu
+     */
     public void startSystem() {
         int choice;
         do {
-            System.out.println("\n-----Bakery Management System-----");
-            System.out.println("1. Add Item");
-            System.out.println("2. Update Item");
-            System.out.println("3. Remove Item"); 
-            System.out.println("4. Display Inventory");
+            System.out.println("\n-----Inventory Management-----");
+            System.out.println("1. Add New Item");
+            System.out.println("2. Update Existing Item");
+            System.out.println("3. Remove Item");
+            System.out.println("4. Display Current Inventory");
             System.out.println("0. Back to Main Menu");
             System.out.print("Enter choice: ");
             choice = sc.nextInt();
@@ -49,112 +52,188 @@ public class BakeryManagementSystem {
                 case 2: updateItem(); break;
                 case 3: removeItem(); break;
                 case 4: displayInventory(); break;
-                case 0: System.out.println("Exiting..."); break;
+                case 0: System.out.println("Returning to main menu..."); break;
                 default: System.out.println("Invalid choice.");
             }
         } while(choice != 0);
     }
 
+    /**
+     * Adds new item to inventory
+     */
     private void addItem() {
         System.out.print("Enter item name: ");
-        name = sc.nextLine();
+        String name = sc.nextLine();
         System.out.print("Enter price: ");
-        p = sc.nextDouble();
+        double price = sc.nextDouble();
         System.out.print("Enter quantity: ");
-        qty = sc.nextInt();
-        inventory.add(new BakeryItem(name, p, qty));
-        System.out.println("Item added.");
+        int quantity = sc.nextInt();
+        sc.nextLine();
+        
+        inventory.add(new BakeryItem(name, price, quantity));
+        System.out.println("Item added successfully!");
     }
 
+    /**
+     * Updates existing item's price and quantity
+     */
     private void updateItem() {
         System.out.print("Enter item name to update: ");
-        name = sc.nextLine();
-        for (BakeryItem item : inventory) {
-            if (item.getItemName().equalsIgnoreCase(name)) {
-                System.out.print("Enter new price: ");
-                item.setPrice(sc.nextDouble());
-                System.out.print("Enter new quantity: ");
-                item.setQuantity(sc.nextInt());
-                System.out.println("Item updated.");
-                return;
-            }
+        String name = sc.nextLine();
+        BakeryItem item = getInventory(name);
+        
+        if (item != null) {
+            System.out.print("Enter new price (current: " + item.getPrice() + "): ");
+            item.setPrice(sc.nextDouble());
+            System.out.print("Enter new quantity (current: " + item.getQuantity() + "): ");
+            item.setQuantity(sc.nextInt());
+            sc.nextLine();
+            System.out.println("Item updated successfully!");
+        } else {
+            System.out.println("Item not found!");
         }
-        System.out.println("Item not found.");
     }
 
+    /**
+     * Removes item from inventory
+     */
     private void removeItem() {
         System.out.print("Enter item name to remove: ");
-        name = sc.nextLine();
-        inventory.removeIf(item -> item.getItemName().equalsIgnoreCase(name));
-        System.out.println("Item removed.");
+        String name = sc.nextLine();
+        boolean removed = inventory.removeIf(item -> item.getItemName().equalsIgnoreCase(name));
+        System.out.println(removed ? "Item removed successfully!" : "Item not found!");
     }
 
+    /**
+     * Displays current inventory in table format
+     */
     public void displayInventory() {
-        System.out.println("\nCurrent Inventory:");
-        if (inventory.isEmpty()) {
-            System.out.println("No items available.");
-        } else {
-            int index = 1; 
-            System.out.printf("%-10s %-20s %-10s %-10s%n", 
-                "Item No.", "Item Name", "Price(RM)", "Quantity");
-            System.out.println("--------------------------------------------------------");
-            for (BakeryItem item : inventory) {
-                System.out.printf("%-10d %-20s %-10s %-10d%n", 
-                    index++, item.getItemName(), df.format(item.getPrice()), item.getQuantity());
-            }
-            System.out.println("--------------------------------------------------------"); 
+        System.out.println("\n-----Current Inventory-----");
+        System.out.printf("%-3s %-20s %-10s %-10s\n", "No", "Item Name", "Price(RM)", "Quantity");
+        System.out.println("------------------------------------------------");
+        for (int i = 0; i < inventory.size(); i++) {
+            BakeryItem item = inventory.get(i);
+            System.out.printf("%-3d %-20s %-10.2f %-10d\n", 
+                i+1, item.getItemName(), item.getPrice(), item.getQuantity());
         }
     }
 
+    /**
+     * Finds inventory item by name (case-insensitive)
+     */
     public BakeryItem getInventory(String itemName) {
         for (BakeryItem item : inventory) {
             if (item.getItemName().equalsIgnoreCase(itemName)) {
-                return item; 
+                return item;
             }
         }
         return null;
     }
 
-    
+    /**
+     * Handles new order creation process
+     */
     public void placeOrder() {
-        Order newOrder = new Order(this);
+        System.out.print("Enter customer name: ");
+        String name = sc.nextLine();
+        System.out.print("Enter phone number: ");
+        String phone = sc.nextLine();
+        Customer customer = new Customer(customers.size()+1, name, phone);
+        customers.add(customer);
+        
+        Order newOrder = new Order(this, customer);
         newOrder.PlaceOrder();
         orderList.add(newOrder);
     }
-// methods below can be implemented in Report Class
+
+    /**
+     * Displays all past orders
+     */
     public void displayOrderHistory() {
         if (orderList.isEmpty()) {
             System.out.println("No orders found.");
-        } else {
-            System.out.println("\n=== Order History ===");
-            for (Order order : orderList) {
-                order.displayReceipt();
-            }
+            return;
+        }
+        
+        System.out.println("\n-----Order History-----");
+        for (Order order : orderList) {
+            order.displayReceipt();
         }
     }
 
+    /**
+     * Displays order history for a specific customer
+     */
+    public void viewCustomerOrders(String customerName) {
+        System.out.println("\n-----Order History for " + customerName + "-----");
+       
+        for (Order order : orderList)
+        {
+            if (order.getCustomer().getName().equalsIgnoreCase(customerName))
+            {
+            	
+            	{ 	
+            		order.displayReceipt();}
+          
+             }return;
+        }
+        System.out.println("Order not found.");
+       
+    }
+
+    /**
+     * Calculates and displays total sales from all orders
+     */
     public void displayTotalSales() {
         if (orderList.isEmpty()) {
             System.out.println("No sales data available.");
-        } else {
-            double total = 0;
-            for (Order order : orderList) {
-                for (BakeryItem item : order.getOrderlists()) {
-                    total += item.getPrice() * item.getQuantity();
-                }
-            }
-            System.out.printf("\nTotal Sales: RM%.2f\n", total);
+            return;
         }
+        
+        double total = 0;
+        for (Order order : orderList) {
+            for (BakeryItem item : order.getOrderlists()) {
+                total += item.getPrice() * item.getQuantity();
+            }
+        }
+        System.out.printf("\nTotal Sales: RM%.2f\n", total);
     }
 
+    /**
+     * Searches for order by ID
+     */
     public void searchOrder(int orderId) {
         for (Order order : orderList) {
             if (order.getOrderId() == orderId) {
-                System.out.println("\n=== Order Found ===");
+                System.out.println("\n-----Order Found-----");
                 order.displayReceipt();
                 return;
             }
         }
         System.out.println("Order not found.");
+      }
+    
+    public void displayAllCustomers() {
+        if (customers.isEmpty()) {
+            System.out.println("No customers registered yet.");
+            return;
+        }
+        
+        System.out.println("\n-----Registered Customers-----");
+        System.out.printf("%-5s %-20s %-15s\n", "ID", "Name", "Phone Number");
+        System.out.println("-----------------------------------------");
+        for (Customer customer : customers) {
+            System.out.printf("%-5d %-20s %-15s\n", 
+                customer.getCustomerId(), 
+                customer.getName(), 
+                customer.getPhone());
+        }
     }
+    
+
+    public ArrayList<Order> getOrderList() {
+        return orderList;
+    }
+
+    
 }
