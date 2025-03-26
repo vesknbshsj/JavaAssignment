@@ -34,7 +34,7 @@ public class BakeryManagementSystem {
     public void startSystem() {
         int choice;
         do {
-            System.out.println("\n-----Bakery Management System-----");
+            System.out.println("\n-------------Store----------------");
             System.out.println("1. Add Item");
             System.out.println("2. Update Item");
             System.out.println("3. Remove Item"); 
@@ -121,7 +121,8 @@ public class BakeryManagementSystem {
         newOrder.PlaceOrder();
         orderList.add(newOrder);
     }
-// methods below can be implemented in Report Class
+    
+    //method below can be implemented in Report Class
     public void displayOrderHistory() {
         if (orderList.isEmpty()) {
             System.out.println("No orders found.");
@@ -132,7 +133,8 @@ public class BakeryManagementSystem {
             }
         }
     }
-
+    
+    //method below can be implemented in Report Class
     public void displayTotalSales() {
         if (orderList.isEmpty()) {
             System.out.println("No sales data available.");

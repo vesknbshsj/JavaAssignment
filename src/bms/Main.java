@@ -9,7 +9,7 @@ public class Main {
         
         do {
             System.out.println("\n-----Bakery Management System-----");
-            System.out.println("1. Edit Item");
+            System.out.println("1. Edit Inventory");
             System.out.println("2. Place Order");
             System.out.println("3. View Order History");
             System.out.println("4. View Total Sales");
