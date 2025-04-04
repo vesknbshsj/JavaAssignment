@@ -109,7 +109,14 @@ public class BakeryManagementSystem {
      */
     public void displayInventory() {
         System.out.println("\n-----Current Inventory-----");
+        /***************************************************************************************
+        *    Title: Formatting Output in Java with printf()
+        *    Author: Baeldung
+        *    Date: 2022
+        *    Availability: https://www.baeldung.com/java-printstream-printf
+        ***************************************************************************************/
         System.out.printf("%-3s %-20s %-10s %-10s\n", "No", "Item Name", "Price(RM)", "Quantity");
+        
         System.out.println("------------------------------------------------");
         for (int i = 0; i < inventory.size(); i++) {
             BakeryItem item = inventory.get(i);
@@ -129,7 +136,13 @@ public class BakeryManagementSystem {
         }
         return null;
     }
-
+    /**
+     * Gets a copy of the current inventory list
+     * @return List of all bakery items in inventory
+     */
+    public List<BakeryItem> getFullInventory() {
+        return new ArrayList<>(inventory); 
+    }
     /**
      * Handles new order creation process
      */
@@ -199,20 +212,7 @@ public class BakeryManagementSystem {
         System.out.printf("\nTotal Sales: RM%.2f\n", total);
     }
 
-    /**
-     * Searches for order by ID
-     */
-    public void searchOrder(int orderId) {
-        for (Order order : orderList) {
-            if (order.getOrderId() == orderId) {
-                System.out.println("\n-----Order Found-----");
-                order.displayReceipt();
-                return;
-            }
-        }
-        System.out.println("Order not found.");
-      }
-    
+   
     public void displayAllCustomers() {
         if (customers.isEmpty()) {
             System.out.println("No customers registered yet.");
@@ -220,6 +220,12 @@ public class BakeryManagementSystem {
         }
         
         System.out.println("\n-----Registered Customers-----");
+        /***************************************************************************************
+        *    Title: Formatting Output in Java with printf()
+        *    Author: Baeldung
+        *    Date: 2022
+        *    Availability: https://www.baeldung.com/java-printstream-printf
+        ***************************************************************************************/
         System.out.printf("%-5s %-20s %-15s\n", "ID", "Name", "Phone Number");
         System.out.println("-----------------------------------------");
         for (Customer customer : customers) {

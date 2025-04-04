@@ -85,6 +85,12 @@ public class Order {
         double total = 0;
         for (BakeryItem item : orderlists) {
             double itemTotal = item.getPrice() * item.getQuantity();
+            /***************************************************************************************
+            *    Title: Formatting Output in Java with printf()
+            *    Author: Baeldung
+            *    Date: 2022
+            *    Availability: https://www.baeldung.com/java-printstream-printf
+            ***************************************************************************************/
             System.out.printf("- %d x %s \tRM%.2f \t= RM%.2f\n",
                 item.getQuantity(), item.getItemName(), item.getPrice(), itemTotal);
             total += itemTotal;
