@@ -13,15 +13,15 @@ public class Order {
     private int orderId;
     private String status;
     private ArrayList<BakeryItem> orderlists;
-    private BakeryManagementSystem bms;
+    private Inventory inventory;
     private Customer customer;
     private Scanner sc = new Scanner(System.in);
 
     /**
      * Creates new order associated with customer
      */
-    public Order(BakeryManagementSystem bms, Customer customer) {
-        this.bms = bms;
+    public Order(Inventory inventory, Customer customer) {
+        this.inventory = inventory;
         this.customer = customer;
         this.orderId = ++orderIdCounter;
         this.status = STATUS_PENDING;
@@ -31,9 +31,9 @@ public class Order {
     /**
      * Main order processing method
      */
-    public void PlaceOrder() {
+    public void placeOrder() {
         int continueOrder;
-        bms.displayInventory();
+        inventory.displayInventory();
         displayStatus();
         
         do {
@@ -43,22 +43,7 @@ public class Order {
             int quantity = sc.nextInt();
             sc.nextLine();
             
-            BakeryItem inventoryItem = bms.getInventory(itemName);
-            if (inventoryItem != null) {
-                if (inventoryItem.getQuantity() >= quantity) {
-                    inventoryItem.setQuantity(inventoryItem.getQuantity() - quantity);
-                    orderlists.add(new BakeryItem(
-                        inventoryItem.getItemName(),
-                        inventoryItem.getPrice(),
-                        quantity
-                    ));
-                    System.out.println(quantity + " x " + inventoryItem.getItemName() + " added to order");
-                } else {
-                    System.out.println("Insufficient stock! Available: " + inventoryItem.getQuantity());
-                }
-            } else {
-                System.out.println("Item not found!");
-            }
+            addItemToOrder(itemName, quantity);
             
             status = STATUS_IN_PROGRESS;
             displayStatus();
@@ -69,7 +54,41 @@ public class Order {
         } while (continueOrder != 0);
         
         displayReceipt();
+        finalizeOrder();
+    }
+
+    /**
+     * Adds an item to the current order
+     * @param itemName Name of the item to add
+     * @param quantity Quantity to add
+     * @return true if successfully added, false otherwise
+     */
+    public boolean addItemToOrder(String itemName, int quantity) {
+        BakeryItem inventoryItem = inventory.getItem(itemName);
+        if (inventoryItem != null) {
+            if (inventory.updateQuantityAfterOrder(itemName, quantity)) {
+                orderlists.add(new BakeryItem(
+                    inventoryItem.getItemName(),
+                    inventoryItem.getPrice(),
+                    quantity
+                ));
+                System.out.println(quantity + " x " + inventoryItem.getItemName() + " added to order");
+                return true;
+            } else {
+                System.out.println("Insufficient stock! Available: " + inventoryItem.getQuantity());
+            }
+        } else {
+            System.out.println("Item not found!");
+        }
+        return false;
+    }
+    
+    /**
+     * Completes the order process
+     */
+    public void finalizeOrder() {
         customer.addOrder(this);
+        System.out.println("Order #" + orderId + " has been finalized.");
     }
 
     /**
@@ -82,6 +101,19 @@ public class Order {
         System.out.println("Phone Number: "+customer.getPhone());
         System.out.println("Items:");
         
+        double total = calculateTotal();
+        
+        System.out.println("-----------------------");
+        System.out.printf("Total: RM%.2f\n", total);
+        status = STATUS_COMPLETED;
+        displayStatus();
+    }
+    
+    /**
+     * Calculates the total cost of the order
+     * @return Total cost
+     */
+    public double calculateTotal() {
         double total = 0;
         for (BakeryItem item : orderlists) {
             double itemTotal = item.getPrice() * item.getQuantity();
@@ -95,11 +127,7 @@ public class Order {
                 item.getQuantity(), item.getItemName(), item.getPrice(), itemTotal);
             total += itemTotal;
         }
-        
-        System.out.println("-----------------------");
-        System.out.printf("Total: RM%.2f\n", total);
-        status = STATUS_COMPLETED;
-        displayStatus();
+        return total;
     }
 
     /**

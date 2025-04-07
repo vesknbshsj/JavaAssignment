@@ -6,13 +6,17 @@ import java.util.*;
  * Handles the main menu and user interaction
  */
 public class Main {
+    private static Inventory inventory;
+    private static ArrayList<Order> orderList = new ArrayList<>();
+    private static ArrayList<Customer> customers = new ArrayList<>();
+    private static Scanner sc = new Scanner(System.in);
+    
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        BakeryManagementSystem system = new BakeryManagementSystem();
-        SalesReport Sreport = new SalesReport(system); 
-        InventoryReport Ireport = new InventoryReport(system); 
-        int choice;
+        // Initialize system components
+        inventory = new Inventory();
+        Report report = new Report(inventory, orderList);
         
+        int choice;
         do {
             System.out.println("\n-----Bakery Management System-----");
             System.out.println("1. Manage Inventory");
@@ -27,21 +31,37 @@ public class Main {
             sc.nextLine();    
             
             switch(choice) {
-                case 1: system.startSystem(); break;
-                case 2: system.placeOrder(); break;
-                case 3: Sreport.generateReport(); break; 
-                case 4: Ireport.generateReport();break;
+                case 1: inventory.manageInventory(); break;
+                case 2: placeOrder(); break;
+                case 3: report.generateSalesReport(); break; 
+                case 4: report.generateInventoryReport(); break;
                 case 5: 
                     System.out.print("Enter customer name: ");
-                    system.viewCustomerOrders(sc.nextLine());
+                    String customerName = sc.nextLine();
+                    Customer.viewCustomerOrders(customerName, orderList);
                     break;
                 case 6: 
-                    system.displayAllCustomers();
+                    Customer.displayAllCustomers(customers);
                     break;
                 case 0: System.out.println("Exiting system..."); break;    
                 default: System.out.println("Invalid choice.");
             }
         } while (choice != 0);
-     
+    }
+    
+    /**
+     * Handles new order creation process
+     */
+    private static void placeOrder() {
+        System.out.print("Enter customer name: ");
+        String name = sc.nextLine();
+        System.out.print("Enter phone number: ");
+        String phone = sc.nextLine();
+        Customer customer = new Customer(customers.size()+1, name, phone);
+        customers.add(customer);
+        
+        Order newOrder = new Order(inventory, customer);
+        newOrder.placeOrder();
+        orderList.add(newOrder);
     }
 }
