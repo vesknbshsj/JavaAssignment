@@ -18,7 +18,7 @@ public interface InventoryInterface {
         50, 30, 20, 20, 100, 40, 25, 45
     };
     
-    public static final int MAX_QUANTITY = 100; // Modified from 200 to 100 as requested
+    public static final int MAX_QUANTITY = 100; 
     
     // Core inventory operations
     public void addItem(String name, double price, int quantity);
