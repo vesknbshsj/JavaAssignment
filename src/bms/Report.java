@@ -15,7 +15,7 @@ public class Report {
     *    Code version: Java SE 8
     *    Availability: https://docs.oracle.com/javase/8/docs/api/java/time/LocalDate.html
     ***************************************************************************************/
-    private LocalDate date = LocalDate.now();
+    LocalDate date = LocalDate.now();
   
     /**
      * Creates a new report generator

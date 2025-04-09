@@ -5,8 +5,9 @@ import java.util.*;
  * Manages the bakery inventory items
  */
 public class Inventory implements InventoryInterface {
+	 Scanner sc = new Scanner(System.in);
     private ArrayList<BakeryItem> inventory = new ArrayList<>();
-    private Scanner sc = new Scanner(System.in);
+   
     
     /**
      * Constructor - initializes with default bakery items
@@ -100,7 +101,7 @@ public class Inventory implements InventoryInterface {
     /**
      * Adds new item to inventory
      */
-    @Override
+   
     public void addItem(String name, double price, int quantity) {
         // Ensure quantity doesn't exceed MAX_QUANTITY
         if (quantity > MAX_QUANTITY) {
@@ -113,7 +114,7 @@ public class Inventory implements InventoryInterface {
     /**
      * Updates existing item's price and quantity
      */
-    @Override
+  
     public void updateItem(String name, double price, int quantity) {
         BakeryItem item = getItem(name);
         
@@ -133,16 +134,35 @@ public class Inventory implements InventoryInterface {
     /**
      * Removes item from inventory
      */
-    @Override
     public void removeItem(String name) {
-        boolean removed = inventory.removeIf(item -> item.getItemName().equalsIgnoreCase(name));
-        System.out.println(removed ? "Item removed successfully!" : "Item not found!");
+        // Flag to track if we found and removed the item
+        boolean removed = false;
+        
+        // Loop through the inventory list
+        for (int i = 0; i < inventory.size(); i++) {
+            BakeryItem item = inventory.get(i);
+            
+            // Check if this is the item we want to remove (case-insensitive comparison)
+            if (item.getItemName().equalsIgnoreCase(name)) {
+                // Remove the item at this position
+                inventory.remove(i);
+                removed = true;
+                break; // Exit the loop once we've found and removed the item
+            }
+        }
+        
+        // Print appropriate message based on whether we removed an item
+        if (removed) {
+            System.out.println("Item removed successfully!");
+        } else {
+            System.out.println("Item not found!");
+        }
     }
     
     /**
      * Displays current inventory in table format
      */
-    @Override
+
     public void displayInventory() {
         System.out.println("\n-----Current Inventory-----");
         /***************************************************************************************
@@ -205,7 +225,7 @@ public class Inventory implements InventoryInterface {
      * @param quantity The quantity ordered
      * @return true if update successful, false if insufficient stock
      */
-    public boolean updateQuantityAfterOrder(String itemName, int quantity) {
+    public boolean updateQuantity(String itemName, int quantity) {
         BakeryItem item = getItem(itemName);
         if (item != null && item.getQuantity() >= quantity) {
             item.setQuantity(item.getQuantity() - quantity);
@@ -213,4 +233,4 @@ public class Inventory implements InventoryInterface {
         }
         return false;
     }
-}
+} 

@@ -15,7 +15,7 @@ public class Order {
     private ArrayList<BakeryItem> orderlists;
     private Inventory inventory;
     private Customer customer;
-    private Scanner sc = new Scanner(System.in);
+    Scanner sc = new Scanner(System.in);
 
     /**
      * Creates new order associated with customer
@@ -54,7 +54,7 @@ public class Order {
         } while (continueOrder != 0);
         
         displayReceipt();
-        finalizeOrder();
+      
     }
 
     /**
@@ -66,7 +66,7 @@ public class Order {
     public boolean addItemToOrder(String itemName, int quantity) {
         BakeryItem inventoryItem = inventory.getItem(itemName);
         if (inventoryItem != null) {
-            if (inventory.updateQuantityAfterOrder(itemName, quantity)) {
+            if (inventory.updateQuantity(itemName, quantity)) {
                 orderlists.add(new BakeryItem(
                     inventoryItem.getItemName(),
                     inventoryItem.getPrice(),
@@ -83,13 +83,7 @@ public class Order {
         return false;
     }
     
-    /**
-     * Completes the order process
-     */
-    public void finalizeOrder() {
-        customer.addOrder(this);
-        System.out.println("Order #" + orderId + " has been finalized.");
-    }
+
 
     /**
      * Displays order receipt with all items and total

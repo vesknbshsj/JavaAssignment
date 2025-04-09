@@ -6,16 +6,16 @@ import java.util.*;
  * Handles the main menu and user interaction
  */
 public class Main {
-    private static Inventory inventory;
-    private static ArrayList<Order> orderList = new ArrayList<>();
-    private static ArrayList<Customer> customers = new ArrayList<>();
-    private static Scanner sc = new Scanner(System.in);
+
     
     public static void main(String[] args) {
         // Initialize system components
+    	Scanner sc = new Scanner(System.in);
+    	Inventory inventory;
         inventory = new Inventory();
+        ArrayList<Order> orderList = new ArrayList<>();
         Report report = new Report(inventory, orderList);
-        
+        ArrayList<Customer> customers = new ArrayList<>();
         int choice;
         do {
             System.out.println("\n-----Bakery Management System-----");
@@ -32,7 +32,16 @@ public class Main {
             
             switch(choice) {
                 case 1: inventory.manageInventory(); break;
-                case 2: placeOrder(); break;
+                case 2:  System.out.print("Enter customer name: ");
+                String name = sc.nextLine();
+                System.out.print("Enter phone number: ");
+                String phone = sc.nextLine();
+                Customer customer = new Customer(customers.size()+1, name, phone);
+                customers.add(customer);
+                
+                Order newOrder = new Order(inventory, customer);
+                newOrder.placeOrder();
+                orderList.add(newOrder); break;
                 case 3: report.generateSalesReport(); break; 
                 case 4: report.generateInventoryReport(); break;
                 case 5: 
@@ -47,21 +56,5 @@ public class Main {
                 default: System.out.println("Invalid choice.");
             }
         } while (choice != 0);
-    }
-    
-    /**
-     * Handles new order creation process
-     */
-    private static void placeOrder() {
-        System.out.print("Enter customer name: ");
-        String name = sc.nextLine();
-        System.out.print("Enter phone number: ");
-        String phone = sc.nextLine();
-        Customer customer = new Customer(customers.size()+1, name, phone);
-        customers.add(customer);
-        
-        Order newOrder = new Order(inventory, customer);
-        newOrder.placeOrder();
-        orderList.add(newOrder);
     }
 }
