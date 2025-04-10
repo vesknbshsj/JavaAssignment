@@ -75,30 +75,6 @@ public class Customer {
         }
     }
     
-    /**
-     * Displays all registered customers
-     * @param customers List of all customers in the system
-     */
-    public static void displayAllCustomers(ArrayList<Customer> customers) {
-        if (customers.isEmpty()) {
-            System.out.println("No customers registered yet.");
-            return;
-        }
-        
-        System.out.println("\n-----Registered Customers-----");
-        /***************************************************************************************
-        *    Title: Formatting Output in Java with printf()
-        *    Author: Baeldung
-        *    Date: 2022
-        *    Availability: https://www.baeldung.com/java-printstream-printf
-        ***************************************************************************************/
-        System.out.printf("%-5s %-20s %-15s\n", "ID", "Name", "Phone Number");
-        System.out.println("-----------------------------------------");
-        for (Customer customer : customers) {
-            System.out.printf("%-5d %-20s %-15s\n", 
-                customer.getCustomerId(), 
-                customer.getName(), 
-                customer.getPhone());
-        }
-    }
+    
+  
 }
